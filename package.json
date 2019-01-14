@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/gregmorihovitis/githubAvatarDownloader/issues"
   },
-  "homepage": "https://github.com/gregmorihovitis/githubAvatarDownloader#readme"
+  "homepage": "https://github.com/gregmorihovitis/githubAvatarDownloader#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
 }
