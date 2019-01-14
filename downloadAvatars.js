@@ -7,7 +7,7 @@ function getRepoContributors(repoOwner, repoName, callback) {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
     headers: {
       'User-Agent': 'request',
-      'Authorization': "auth.githubToken"
+      'Authorization': 'Token ' + auth.githubToken
     }
   };
 
@@ -23,8 +23,9 @@ getRepoContributors("jquery", "jquery", avatarURLS);
 
 function avatarURLS(err, userInfo){
   if(err) throw err;
+
   userInfo.forEach(currUser => {
-    console.log(currUser.avatar_url);
+    downloadImageByURL(currUser.avatar_url, 'avatars/' + currUser.login);
   });
 }
 
