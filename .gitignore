@@ -1,6 +1,6 @@
 #github token
 secrets.js
-
+.env
 # Logs
 logs
 *.log

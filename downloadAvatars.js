@@ -1,17 +1,18 @@
 //Greg Morihovitis
 //Week 2 Day 1 GitHub Avatar downloader
 
+require('dotenv').config()
 const request = require('request');
-const auth = require('./secrets.js')
 const fs = require('fs');
 let userInput = process.argv.slice(2);
+
 
 function getRepoContributors(repoOwner, repoName, callback) {
   let options = {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
     headers: {
       'User-Agent': 'request',
-      'Authorization': 'Token ' + auth.githubToken
+      'Authorization': 'Token ' + process.env.token
     }
   };
 
