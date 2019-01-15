@@ -1,6 +1,7 @@
 const request = require('request');
 const auth = require('./secrets.js')
 const fs = require('fs');
+let userInput = process.argv.slice(2);
 
 function getRepoContributors(repoOwner, repoName, callback) {
   let options = {
@@ -18,8 +19,6 @@ function getRepoContributors(repoOwner, repoName, callback) {
     });
 }
 
-//Test Code
-getRepoContributors("jquery", "jquery", avatarURLS);
 
 function avatarURLS(err, userInfo){
   if(err) throw err;
@@ -37,7 +36,12 @@ function downloadImageByURL(url, filePath){
   .pipe(fs.createWriteStream(filePath), console.log("Download Complete!"));
 }
 
-// downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg");
+if(userInput.length === 2){
+  getRepoContributors(userInput[0], userInput[1], avatarURLS);
+}
+else{
+  console.log('Please enter a valid owner name and repo name');
+}
 
 
 
