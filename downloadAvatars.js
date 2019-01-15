@@ -15,6 +15,10 @@ function getRepoContributors(repoOwner, repoName, callback) {
       'Authorization': 'Token ' + process.env.token
     }
   };
+  if(!process.env.token){
+    console.log('No token present')
+    return;
+  }
 
 //requests the given information and only procceeds if the repository is valid
   request(options, function(err, res, body) {
@@ -24,7 +28,8 @@ function getRepoContributors(repoOwner, repoName, callback) {
     }
 
     else{
-      console.log('Please enter a valid repo.')
+      console.log(res.statusCode + ": " + res.statusMessage);
+      return;
     }
   });
 }
@@ -33,9 +38,12 @@ function getRepoContributors(repoOwner, repoName, callback) {
 function avatarURLS(err, userInfo){
   if(err) throw err;
 
-  userInfo.forEach(currUser => {
-    downloadImageByURL(currUser.avatar_url, 'avatars/' + currUser.login + '.png');
-  });
+  if(!fs.existsSync('avatars')){
+    fs.mkdirSync('./avatars');
+  }
+    userInfo.forEach(currUser => {
+      downloadImageByURL(currUser.avatar_url, 'avatars/' + currUser.login + '.png');
+    });
 }
 
 function downloadImageByURL(url, filePath){
@@ -48,13 +56,7 @@ function downloadImageByURL(url, filePath){
 
 //Checks the valid amount of inputs and if the location folder exists
 if(userInput.length === 2){
-  if(fs.existsSync('avatars')){
     getRepoContributors(userInput[0], userInput[1], avatarURLS);
-  }
-
-  else{
-    console.log('The destination save folder does not exist.');
-  }
 }
 
 else{
