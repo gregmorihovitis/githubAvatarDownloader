@@ -1,3 +1,6 @@
+//Greg Morihovitis
+//Week 2 Day 1 GitHub Avatar downloader
+
 const request = require('request');
 const auth = require('./secrets.js')
 const fs = require('fs');
@@ -12,10 +15,10 @@ function getRepoContributors(repoOwner, repoName, callback) {
     }
   };
 
+//requests the given information and only procceeds if the repository is valid
   request(options, function(err, res, body) {
     if(res.statusCode === 200){
       let userData = JSON.parse(body);
-
       callback(err, userData);
     }
 
@@ -30,7 +33,7 @@ function avatarURLS(err, userInfo){
   if(err) throw err;
 
   userInfo.forEach(currUser => {
-    downloadImageByURL(currUser.avatar_url, 'avatars/' + currUser.login);
+    downloadImageByURL(currUser.avatar_url, 'avatars/' + currUser.login + '.png');
   });
 }
 
@@ -42,6 +45,7 @@ function downloadImageByURL(url, filePath){
   .pipe(fs.createWriteStream(filePath), console.log("Download Complete!"));
 }
 
+//Checks the valid amount of inputs and if so executes code
 if(userInput.length === 2){
   getRepoContributors(userInput[0], userInput[1], avatarURLS);
 }
