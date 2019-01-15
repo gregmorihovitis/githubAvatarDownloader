@@ -46,10 +46,17 @@ function downloadImageByURL(url, filePath){
   .pipe(fs.createWriteStream(filePath), console.log("Download Complete!"));
 }
 
-//Checks the valid amount of inputs and if so executes code
+//Checks the valid amount of inputs and if the location folder exists
 if(userInput.length === 2){
-  getRepoContributors(userInput[0], userInput[1], avatarURLS);
+  if(fs.existsSync('avatars')){
+    getRepoContributors(userInput[0], userInput[1], avatarURLS);
+  }
+
+  else{
+    console.log('The destination save folder does not exist.');
+  }
 }
+
 else{
   console.log('Please enter a valid owner name and repo name');
 }
