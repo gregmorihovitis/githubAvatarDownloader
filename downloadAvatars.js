@@ -13,10 +13,16 @@ function getRepoContributors(repoOwner, repoName, callback) {
   };
 
   request(options, function(err, res, body) {
-    let userData = JSON.parse(body);
+    if(res.statusCode === 200){
+      let userData = JSON.parse(body);
 
-    callback(err, userData);
-    });
+      callback(err, userData);
+    }
+
+    else{
+      console.log('Please enter a valid repo.')
+    }
+  });
 }
 
 
